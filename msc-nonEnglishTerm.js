@@ -7,7 +7,7 @@ var Schema = mongoose.Schema;
 
 var nonEnglishTermSchema = new Schema({
   wordEnglish: { type: String, required: true},
-  wordNonEnglish: { type: String, required : true, unique: true  },
+  wordNonEnglish: { type: String, required : true },
   wordExpanded: { type: String, default: '' },
   languageCode: { type: String, required: true },
   image: { type: String, default: '' },

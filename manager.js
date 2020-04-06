@@ -256,6 +256,17 @@ module.exports = function () {
       // This will find zero or more
       return results;
     },
+      //GET SOME BY ENGLISHTERMSID
+      nonEnglishTermGetByEnglishID: async function (id) {
+    
+        // URL decode the incoming value
+        id = decodeURIComponent(id);
+      
+        // Attempt to find in the "name" field, case-insensitive
+        let results = await nonEnglishTerms.find( { wordEnglish: { $regex: id, $options: "i" } });
+        // This will find zero or more
+        return results;
+      },
      //GET ONE 
     nonEnglishTermGetById: function (itemId) {
       return new Promise(function (resolve, reject) {
@@ -278,26 +289,28 @@ module.exports = function () {
     },
     //POST
     nonEnglishTermAdd: async function (newItem) {
+      // return new Promise(function (resolve, reject) {
+
+      let englishItemID
+      let itemID
+        nonEnglishTerms.create(newItem, (error, item) => {
+          if (error) {
+            // Cannot add item
+            return reject(error.message);
+          }
+        itemID = item._id
+        });
+
+          let english = await englishTerms.findOne({wordEnglish : newItem.wordEnglish})
+          englishItemID = english._id
       
-    
-        nonEnglishTerms.create(newItem)
-
-            let nonEnglish = await nonEnglishTerms.findOne({wordEnglish : newItem.wordEnglish})
-           
-            let english = await englishTerms.findOne({wordEnglish : newItem.wordEnglish})
             
-            if(english){
-              
-              nonEnglish.termEnglishId = english._id
-              //console.log(newItem.termEnglishId)
-              await nonEnglish.save()
-               return nonEnglish
-            }
+            
+          let nonEnglish = await nonEnglishTerms.findByIdAndUpdate(itemID,{termEnglishId: englishItemID},{ new: true })
 
-            // Found, one object will be returned
-            return resolve(item);
-
-          },
+            return nonEnglish
+    
+        },
     //PUT Definition
     nonEnglishTermNewDef: async function (newItem, id){
     

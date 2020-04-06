@@ -42,10 +42,10 @@ app.get("/api", (req, res) => {
   // YOU MUST EDIT THIS COLLECTION
   const links = [];
   // This app's resources...
-  links.push({ "rel": "collection", "href": "/api/englishTerm", "methods": "GET,POST" });
+  links.push({ "rel": "collection", "href": "/api/terms/english", "methods": "GET,POST" });
   // Example resources...
-  links.push({ "rel": "collection", "href": "/api/customers", "methods": "GET,POST" });
-  links.push({ "rel": "collection", "href": "/api/employees", "methods": "GET,POST" });
+  links.push({ "rel": "collection", "href": "/api/terms/other", "methods": "GET,POST" });
+
   const linkObject = { 
     "apiName": "Web API A2",
     "apiDescription": "(add a brief description here)",
