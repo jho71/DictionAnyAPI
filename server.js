@@ -96,7 +96,28 @@ app.get("/api/terms/english/:id", (req, res) => {
       res.status(404).json({ "message": "Resource not found" });
     })
 });
-
+// Get all languages
+app.get("/api/languages", (req, res) => {
+  // Call the manager method
+  m.languagesGetAll()
+    .then((data) => {
+      res.json(data);
+    })
+    .catch(() => {
+      res.status(404).json({ "message": "Resource not found" });
+    })
+});
+// Get onn language name by language code
+app.get("/api/languages/convert-code/:id", (req, res) => {
+  // Call the manager method
+  m.languageGetOneByName(req.params.id)
+    .then((data) => {
+      res.json(data);
+    })
+    .catch(() => {
+      res.status(404).json({ "message": "Resource not found" });
+    })
+});
 // Add new
 app.post("/api/terms/english", (req, res) => {
   // Call the manager method
@@ -194,7 +215,7 @@ app.get("/api/terms/other", (req, res) => {
     })
 });
 // Get Some (by english id search through englishTermsId)
-app.get("/api/terms/other/get-some-related/:englishId", (req, res) => {
+app.get("/api/term  :englishId", (req, res) => {
   // Call the manager method
   m.nonEnglishTermGetRelatedByEnglishId(req.params.englishId)
     .then((data) => {

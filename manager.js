@@ -14,7 +14,7 @@ const englishTermSchema = require('./msc-englishTerm.js');
 // Add others as needed
 const nonEnglishTermSchema = require('./msc-nonEnglishTerm.js');
 
-
+const languagesSchema = require('./msc-languages.js')
 
 // ################################################################################
 // Define the functions that can be called by server.js
@@ -24,7 +24,7 @@ module.exports = function () {
   // Collection properties, which get their values upon connecting to the database
   let englishTerms;
   let nonEnglishTerms;
-
+  let languages
   return {
 
     // ############################################################
@@ -72,6 +72,9 @@ module.exports = function () {
           englishTerms = db.model("terms-englishes", englishTermSchema,"terms-englishes")
           // Add others here...
           nonEnglishTerms = db.model("terms-otheres", nonEnglishTermSchema, "terms-otheres")
+          
+          languages = db.model("languages", languagesSchema, "languages")
+          
           resolve();
         });
 
@@ -133,6 +136,37 @@ module.exports = function () {
             return reject('Not found');
           }
         });
+      })
+    },
+   languagesGetAll: function () {
+      return new Promise(function (resolve, reject) {
+
+        // Fetch all documents
+        // During development and testing, can "limit" the returned results to a smaller number
+        // Remove that function call when deploying into production
+        languages.find()
+          .sort({ name: 'asc'})
+          .exec((error, items) => {
+            if (error) {
+              // Query error
+              return reject(error.message);
+            }
+            // Found, a collection will be returned
+            return resolve(items);
+          });
+      })
+    },
+    languageGetOneByName: function (text) {
+      return new Promise(function (resolve, reject) {
+        // URL decode the incoming value
+        //text = decodeURIComponent(text);
+
+        // Attempt to find in the "name" field, case-insensitive
+        var results = languages.findOne({ code : text});
+        // This will find zero or more
+        return resolve(results);
+        // Find one specific document
+
       })
     },
        //GET ONE 
