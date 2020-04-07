@@ -97,7 +97,7 @@ app.get("/api/terms/english/:id", (req, res) => {
     })
 });
 // Get all languages
-app.get("/api/languages", (req, res) => {
+app.get("/api/terms/languages", (req, res) => {
   // Call the manager method
   m.languagesGetAll()
     .then((data) => {
@@ -108,7 +108,7 @@ app.get("/api/languages", (req, res) => {
     })
 });
 // Get onn language name by language code
-app.get("/api/languages/convert-code/:id", (req, res) => {
+app.get("/api/terms/languages/convert-code/:id", (req, res) => {
   // Call the manager method
   m.languageGetOneByName(req.params.id)
     .then((data) => {
