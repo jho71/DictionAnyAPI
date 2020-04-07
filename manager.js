@@ -69,9 +69,9 @@ module.exports = function () {
         // https://nodejs.org/api/events.html#events_emitter_once_eventname_listener
         db.once('open', () => {
           console.log('Connection to the database was successful');
-          englishTerms = db.model("terms-english", englishTermSchema, "terms-english")
+          englishTerms = db.model("english", englishTermSchema, "terms-english")
           // Add others here...
-          nonEnglishTerms = db.model("terms-other", nonEnglishTermSchema, "terms-other")
+          nonEnglishTerms = db.model("other", nonEnglishTermSchema, "terms-other")
           resolve();
         });
 
@@ -132,6 +132,20 @@ module.exports = function () {
             return reject('Not found');
           }
         });
+      })
+    },
+       //GET ONE 
+    englishTermGetByTermForService: function (text) {
+      return new Promise(function (resolve, reject) {
+        // URL decode the incoming value
+        //text = decodeURIComponent(text);
+
+        // Attempt to find in the "name" field, case-insensitive
+        var results = englishTerms.findOne({ wordEnglish : text});
+        // This will find zero or more
+        return resolve(results);
+        // Find one specific document
+
       })
     },
     //POST
@@ -289,26 +303,37 @@ module.exports = function () {
     },
     //POST
     nonEnglishTermAdd: async function (newItem) {
-      // return new Promise(function (resolve, reject) {
+      return new Promise(function (resolve, reject) {
 
-      let englishItemID
-      let itemID
         nonEnglishTerms.create(newItem, (error, item) => {
           if (error) {
             // Cannot add item
             return reject(error.message);
           }
-        itemID = item._id
+          //Added object will be returned
+          return resolve(item);
         });
+      })
+      // return new Promise(function (resolve, reject) {
 
-          let english = await englishTerms.findOne({wordEnglish : newItem.wordEnglish})
-          englishItemID = english._id
+      // let englishItemID
+      // let itemID
+      //   nonEnglishTerms.create(newItem, (error, item) => {
+      //     if (error) {
+      //       // Cannot add item
+      //       return reject(error.message);
+      //     }
+      //   itemID = item._id
+      //   });
+
+      //     let english = await englishTerms.findOne({wordEnglish : newItem.wordEnglish})
+      //     englishItemID = english._id
       
             
             
-          let nonEnglish = await nonEnglishTerms.findByIdAndUpdate(itemID,{termEnglishId: englishItemID},{ new: true })
+      //     let nonEnglish = await nonEnglishTerms.findByIdAndUpdate(itemID,{termEnglishId: englishItemID},{ new: true })
 
-            return nonEnglish
+      //       return nonEnglish
     
         },
     //PUT Definition

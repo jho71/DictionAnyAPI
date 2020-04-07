@@ -31,8 +31,7 @@ var englishTermSchema = new Schema({
     definition: { type: String, required: true },
     quality: { type: Number, default: 0 },
     likes: { type: Number, default: 0 },
-  }]
-  
+  }],
 });
 
 // Make schema available to the application

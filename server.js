@@ -221,13 +221,19 @@ app.get("/api/terms/other/:id", (req, res) => {
 // Add new
 app.post("/api/terms/other", (req, res) => {
   // Call the manager method
+  m.englishTermGetByTermForService(req.body.wordEnglish).then(related =>{
+  req.body.termEnglishId = related._id
+
   m.nonEnglishTermAdd(req.body)
     .then((data) => {
       res.json(data);
     })
     .catch((error) => {
-      res.status(500).json({ "message": error });
-    })
+      res.status(500).json({ "message": error 
+    });
+  })
+  
+   })
 });
 
 // // Edit existing

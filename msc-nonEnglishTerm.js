@@ -31,7 +31,7 @@ var nonEnglishTermSchema = new Schema({
     quality: { type: Number, default: 0 },
     likes: { type: Number, default: 0 },
   }],
-  termEnglishId: {  type: Schema.Types.ObjectId, ref: 'terms-english'}
+  termEnglishId: {  type: Schema.Types.ObjectId}
 
 });
 // Make schema available to the application
