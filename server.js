@@ -215,7 +215,7 @@ app.get("/api/terms/other", (req, res) => {
     })
 });
 // Get Some (by english id search through englishTermsId)
-app.get("/api/term/other/get-some-related/:englishId", (req, res) => {
+app.get("/api/terms/other/get-some-related/:englishId", (req, res) => {
   // Call the manager method
   m.nonEnglishTermGetRelatedByEnglishId(req.params.englishId)
     .then((data) => {
