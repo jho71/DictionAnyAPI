@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 // Entity schema
 
 var nonEnglishTermSchema = new Schema({
-  wordEnglish: { type: String, required: true},
+  wordEnglish: { type: String, required: true, unique : true},
   wordNonEnglish: { type: String, required : true },
   wordExpanded: { type: String, default: '' },
   languageCode: { type: String, required: true },
@@ -31,7 +31,7 @@ var nonEnglishTermSchema = new Schema({
     quality: { type: Number, default: 0 },
     likes: { type: Number, default: 0 },
   }],
-  termEnglishId: {  type: Schema.Types.ObjectId}
+  termEnglishId: {  type: Schema.Types.ObjectId, ref:"terms-englishes"}
 
 });
 // Make schema available to the application

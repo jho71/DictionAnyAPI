@@ -69,9 +69,9 @@ module.exports = function () {
         // https://nodejs.org/api/events.html#events_emitter_once_eventname_listener
         db.once('open', () => {
           console.log('Connection to the database was successful');
-          englishTerms = db.model("english", englishTermSchema, "terms-english")
+          englishTerms = db.model("terms-englishes", englishTermSchema,"terms-englishes")
           // Add others here...
-          nonEnglishTerms = db.model("other", nonEnglishTermSchema, "terms-other")
+          nonEnglishTerms = db.model("terms-otheres", nonEnglishTermSchema, "terms-otheres")
           resolve();
         });
 
@@ -271,10 +271,10 @@ module.exports = function () {
       // This will find zero or more
       return results;
     },
+
       //GET SOME BY ENGLISHTERMSID
       nonEnglishTermGetRelatedByEnglishId: async function (id) {
     
-              
         // Attempt to find in the "name" field, case-insensitive
         let results = await nonEnglishTerms.find( { termEnglishId: id, });
         // This will find zero or more

@@ -232,8 +232,8 @@ app.get("/api/terms/other/:id", (req, res) => {
 // Add new
 app.post("/api/terms/other", (req, res) => {
   // Call the manager method
-  m.englishTermGetByTermOne(req.body.wordEnglish).then(related =>{
-  req.body.termEnglishId = related._id
+  // m.englishTermGetByTermOne(req.body.wordEnglish).then(related =>{
+  // req.body.termEnglishId = related._id
 
   m.nonEnglishTermAdd(req.body)
     .then((data) => {
@@ -245,7 +245,7 @@ app.post("/api/terms/other", (req, res) => {
   })
   
    })
-});
+// });
 
 // // Edit existing
 // app.put("/api/terms/other/:id", (req, res) => {
