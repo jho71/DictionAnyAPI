@@ -74,7 +74,7 @@ app.get("/api/terms/english", (req, res) => {
     })
 });
 // Get Some (any by term case indescrimanent)
-app.get("/api/terms/english/getSome/:englishTerm", (req, res) => {
+app.get("/api/terms/english/get-some/:englishTerm", (req, res) => {
   // Call the manager method
   m.englishTermGetByTerm(req.params.englishTerm)
     .then((data) => {
@@ -193,9 +193,20 @@ app.get("/api/terms/other", (req, res) => {
       res.status(500).json({ "message": error });
     })
 });
-
+// Get Some (by english id search through englishTermsId)
+app.get("/api/terms/other/get-some-related/:englishId", (req, res) => {
+  // Call the manager method
+  m.nonEnglishTermGetRelatedByEnglishId(req.params.englishId)
+    .then((data) => {
+      res.json(data);
+      console.log(data)
+    })
+    .catch((error) => {
+      res.status(500).json({ "message": error });
+    })
+});
 // Get Some (any by term case indescrimanent)
-app.get("/api/terms/other/getSome/:nonEnglishTerm", (req, res) => {
+app.get("/api/terms/other/get-some/:nonEnglishTerm", (req, res) => {
   // Call the manager method
   m.nonEnglishTermGetByTerm(req.params.nonEnglishTerm)
     .then((data) => {
@@ -221,7 +232,7 @@ app.get("/api/terms/other/:id", (req, res) => {
 // Add new
 app.post("/api/terms/other", (req, res) => {
   // Call the manager method
-  m.englishTermGetByTermForService(req.body.wordEnglish).then(related =>{
+  m.englishTermGetByTermOne(req.body.wordEnglish).then(related =>{
   req.body.termEnglishId = related._id
 
   m.nonEnglishTermAdd(req.body)

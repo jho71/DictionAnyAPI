@@ -114,6 +114,7 @@ module.exports = function () {
       // This will find zero or more
       return results;
     },
+    
      //GET ONE 
     englishTermGetById: function (itemId) {
       return new Promise(function (resolve, reject) {
@@ -135,7 +136,7 @@ module.exports = function () {
       })
     },
        //GET ONE 
-    englishTermGetByTermForService: function (text) {
+    englishTermGetByTermOne: function (text) {
       return new Promise(function (resolve, reject) {
         // URL decode the incoming value
         //text = decodeURIComponent(text);
@@ -271,13 +272,11 @@ module.exports = function () {
       return results;
     },
       //GET SOME BY ENGLISHTERMSID
-      nonEnglishTermGetByEnglishID: async function (id) {
+      nonEnglishTermGetRelatedByEnglishId: async function (id) {
     
-        // URL decode the incoming value
-        id = decodeURIComponent(id);
-      
+              
         // Attempt to find in the "name" field, case-insensitive
-        let results = await nonEnglishTerms.find( { wordEnglish: { $regex: id, $options: "i" } });
+        let results = await nonEnglishTerms.find( { termEnglishId: id, });
         // This will find zero or more
         return results;
       },
