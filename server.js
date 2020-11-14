@@ -24,7 +24,7 @@ m.connect();
 
 // ################################################################################
 // Security setup
-
+/*
 // Passport.js components
 var jwt = require('jsonwebtoken');
 var passport = require("passport");
@@ -67,10 +67,10 @@ var strategy = new JwtStrategy(jwtOptions, function (jwt_payload, next) {
   }
 });
 
-// Activate the security system
+ Activate the security system
 passport.use(strategy);
 app.use(passport.initialize());
-
+*/
 // ################################################################################
 // Deliver the app's home page to browser clients
 
@@ -101,7 +101,7 @@ app.get("/api", (req, res) => {
   };
   res.json(linkObject);
 });
-
+/*
 // ############################################################
 // Requests to handle user account tasks
 
@@ -209,7 +209,6 @@ app.post("/api/useraccounts/login", (req, res) => {
 });
 
 
-
 // ################################################################################
 // Request handlers for testing security scenarios
 
@@ -259,17 +258,19 @@ app.get('/api/security/testrole2andoulocation1', passport.authenticate('jwt', { 
   }
 });
 
+*/
 
 // ################################################################################
 // Request handlers for data entities (listeners)
 
 // Get all
-app.get("/api/terms/english", passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get("/api/terms/english", (req, res) => {
   // Call the manager method
   m.englishTermGetAll()
     .then((data) => {
-      res.json(data, '/api/terms/english');
       console.log(data)
+      res.json(data);
+     
     })
     .catch((error) => {
       res.status(500).json({ "message": error });
