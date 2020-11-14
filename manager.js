@@ -16,6 +16,7 @@ const nonEnglishTermSchema = require('./msc-nonEnglishTerm.js');
 
 const languagesSchema = require('./msc-languages.js')
 
+const userAccountSchema = require('./msc-userAccounts');
 // ################################################################################
 // Define the functions that can be called by server.js
 
@@ -25,6 +26,7 @@ module.exports = function () {
   let englishTerms;
   let nonEnglishTerms;
   let languages
+  let userAccounts;
   return {
 
     // ############################################################
@@ -74,6 +76,9 @@ module.exports = function () {
           nonEnglishTerms = db.model("terms-otheres", nonEnglishTermSchema, "terms-otheres")
           
           languages = db.model("languages", languagesSchema, "languages")
+
+          userAccounts = db.model("user-accounts", userAccountSchema, "user-accounts")
+
           
           resolve();
         });
@@ -82,8 +87,54 @@ module.exports = function () {
       });
     },
 
+    // ############################################################
+    // userAccounts requests
+    useraccountsGetAll: function () {
+      return new Promise(function (resolve, reject) {
 
+        // Fetch all documents
+        // During development and testing, can "limit" the returned results to a smaller number
+        // Remove that function call when deploying into production
+        userAccounts.find()
+          .sort({ name: 'asc'})
+          .exec((error, items) => {
+            if (error) {
+              // Query error
+              return reject(error.message);
+            }
+            // Found, a collection will be returned
+            return resolve(items);
+          });
+      })
+    },
+     //POST
+     useraccountsRegister: function (newItem) {
+      return new Promise(function (resolve, reject) {
 
+        userAccounts.create(newItem, (error, item) => {
+          if (error) {
+            // Cannot add item
+            return reject(error.message);
+          }
+          //Added object will be returned
+          return resolve(item);
+        });
+      })
+    },
+    //POST
+    useraccountsLogin: function (loginCredentials) {
+      return new Promise(function (resolve, reject) {
+
+        userAccounts.findOne({userName : loginCredentials.userName, password : loginCredentials.password} , (error, item) => {
+          if (error) {
+            // Cannot add item
+            return reject(error.message);
+          }
+          //Added object will be returned
+          return resolve(item);
+        });
+      })
+    },
     // ############################################################
     // englishTerm requests
 
