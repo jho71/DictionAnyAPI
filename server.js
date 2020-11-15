@@ -293,7 +293,7 @@ app.get("/api/terms/english/:id", (req, res) => {
   // Call the manager method
   m.englishTermGetById(req.params.id)
     .then((data) => {
-      res.json(package(data, '/api/terms/english'));;
+      res.json(data);;
     })
     .catch(() => {
       res.status(404).json({ "message": "Resource not found" });
