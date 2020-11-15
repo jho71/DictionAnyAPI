@@ -281,7 +281,7 @@ app.get("/api/terms/english/get-some/:englishTerm", (req, res) => {
   // Call the manager method
   m.englishTermGetByTerm(req.params.englishTerm)
     .then((data) => {
-      res.json(package(data, '/api/terms/english'));;
+      res.json(data);
       console.log(data)
     })
     .catch((error) => {
