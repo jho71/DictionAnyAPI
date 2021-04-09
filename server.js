@@ -14,8 +14,11 @@ const HTTP_PORT = process.env.PORT || 8080;
 app.use(bodyParser.json());
 // Add support for CORS
 app.use(cors());
-
-// ################################################################################
+app.all('/', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next()
+});// ################################################################################
 // Data model and persistent store setup
 
 const manager = require("./manager.js");
